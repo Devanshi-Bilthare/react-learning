@@ -1,29 +1,46 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 const App = () => {
-  const [val,setVal] = useState(0)
-  const changeValue = (x)=>{
-    setVal(x)
-  }
+  const [username, setUsername] = useState("");
+  const [names,setNames] = useState([])
+  // const submitHandler = (e)=>{
+  //   e.preventDefault()
+  //   console.log(e.target.name.value)
+  // }
 
-  const formHandler = (e)=>{
-    e.preventDefault()
-    console.log(e)
-  }
+  const submitHandler = (e) => {
+    e.preventDefault();
+    
+    const copyNames = [...names]
+    copyNames.push(username)
+    setNames(copyNames)
 
-  
+    // setNames([...names,username])
+    
+    setUsername("")
+
+    
+  };
+  console.log(names)
+
+
+  // const changeHandler = (e) => {
+  //   setUsername(e.target.value)
+  // }
+
   return (
     <div>
-      <h2>{val}</h2>
-      {/* <button onClick={changeValue}>Change value</button> */}
-      <button onClick={() => changeValue(15)}>change val</button>
-
-      <form onSubmit={formHandler}>
-        <input type="text" />
-        <button>submit</button>
+      <form onSubmit={submitHandler}>
+        <input
+          type="text"
+          placeholder="name"
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
+        />
+        <button>Submit</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
