@@ -1,59 +1,65 @@
 import React, { useState } from "react";
 
 const App = () => {
-  const [taskName,setTaskName] =useState("")
-  const [taskDesc,setTaskDesc] = useState("")
-  const [taskStatus,setTaskStatus] = useState("")
+  const [title, setTitle] = useState("");
+  const [status, setStatus] = useState("incomplete");
+  const [desc, setDesc] = useState("");
+
   const [tasks,setTasks] = useState([])
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setTasks([...tasks,{taskName,taskDesc,taskStatus}])
-    setTaskName("")
-    setTaskDesc("")
-    setTaskStatus("")
+
+    setTasks([...tasks,{title,status,desc}])
+
+    setTitle("")
+    setDesc("")
+    setStatus("incomplete")
   }
+
   console.log(tasks)
 
   return (
-    <div className="bg-stone-900 w-full min-h-screen p-2">
-      <h1 className="text-center text-2xl mt-10 text-white">TO DO List</h1>
-      <form onSubmit={submitHandler} className="w-[80%] bg-white m-auto mt-10 rounded-[10px]">
-        <input
-          type="text"
-          placeholder="Task Name"
-          onChange={(e) => setTaskName(e.target.value)}
-          value={taskName}
-          className="w-[30%] p-2 text-xl rounded-[20px]"
-        />
-         <input
-          type="text"
-          placeholder="Task Description"
-          onChange={(e) => setTaskDesc(e.target.value)}
-          value={taskDesc}
-          className="w-[30%] p-2 text-xl rounded-[20px]"
-        />
-        <input
-          type="text"
-          placeholder="Task Status"
-          onChange={(e) => setTaskStatus(e.target.value)}
-          value={taskStatus}
-          className="w-[30%] p-2 text-xl rounded-[20px]"
-        />
-
-        <button className="w-[10%] p-2 text-xl rounded-[20px] ">ADD Task</button>
+    <div className="w-full min-h-screen bg-stone-800 p-2">
+      <form onSubmit={submitHandler} className="w-[30%] m-auto mt-10">
+        <input type="text"
+         placeholder="Enter Title" 
+         className="w-full p-2" 
+         onChange={(e)=> setTitle(e.target.value)}
+         value={title}
+         />
+        <label htmlFor="" className="w-full p-2 text-white flex gap-2">
+          <input type="radio"
+          onChange={(e)=> setStatus("complete")}
+          checked={status === 'complete' ? true:false}
+          />
+          Complete
+          <input type="radio" 
+          onChange={(e)=> setStatus("incomplete")}
+          checked={status ==='incomplete'?true:false}
+          />
+          Incomplete
+        </label>
+        <textarea
+          placeholder="Enter description"
+          className="w-full p-2"
+          onChange={(e)=> setDesc(e.target.value)}
+          value={desc}
+        ></textarea>
+        <button className="w-full p-2 bg-white">ADD Tasks</button>
       </form>
 
-      <div className="w-[80%] m-auto mt-10 rounded-[10px]">
-        {tasks.map((task,idx)=>(
-         <div className="flex justify-between w-full bg-white p-2 px-5 text-xl mt-10 rounded-[10px]">
-            <li className=" list-none">
-              {task.taskName} : {task.taskDesc}
+      <ul className="w-[30%] m-auto mt-10 text-white">
+        {tasks.map((task,idx)=>{
+          return (
+            <li key={idx} className="border border-white p-2 flex justify-between text-xl mt-2">
+              <span className={task.status === 'complete'?"text-green-300":'text-red-300'}> {task.title} </span>
+              <span><i className="ri-pencil-fill"></i>
+              <i className="ri-close-fill"></i></span>
             </li>
-            <li className="list-none">{task.taskStatus}</li>
-         </div>
-        ))}
-      </div>
+          )
+        })}
+      </ul>
     </div>
   );
 };
