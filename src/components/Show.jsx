@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { taskcontext } from '../context/TaskContext'
 
-const Show = ({tasks,setTasks}) => {
-console.log(tasks)
+const Show = () => {
+  const[tasks,setTasks] = useContext(taskcontext)
   return (
     <ul className="w-[30%] m-auto mt-10 text-white">
 {tasks.map((task,idx)=>{
