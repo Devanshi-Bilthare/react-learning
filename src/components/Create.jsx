@@ -1,7 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { taskcontext } from '../context/TaskContext';
+import { useNavigate } from 'react-router-dom';
 
 const Create = () => {
+  const navigate = useNavigate()
     const [tasks,setTasks] = useContext(taskcontext)
 
     const [title, setTitle] = useState("");
@@ -9,12 +11,8 @@ const Create = () => {
     const [desc, setDesc] = useState("");
     const submitHandler = (e) => {
         e.preventDefault();
-    
         setTasks([...tasks,{title,status,desc}])
-    
-        setTitle("")
-        setDesc("")
-        setStatus("incomplete")
+        navigate('/show')
       }
   return (
     <form onSubmit={submitHandler} className="w-[30%] m-auto mt-10">
